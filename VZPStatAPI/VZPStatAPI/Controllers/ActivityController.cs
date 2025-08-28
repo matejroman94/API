@@ -112,18 +112,14 @@ namespace VZPStatAPI.Controllers
                     throw new ControllerExceptionNotFoundAny(nameOfObjects);
                 }
                 dataDTO = mapper.Map<ActivityGetDTO[]>(data.Item1).ToList();
-                throw new ControllerExceptionGetAllSuccess(nameOfObjects);
+                _APIResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                _APIResponse.Result = dataDTO;
+                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info);
             }
             catch (ControllerExceptionNotFoundAny ex)
             {
                 _APIResponse.StatusCode = System.Net.HttpStatusCode.NotFound;
                 return _returnResponse.Response(false, _APIResponse, info, Logger.Logger.Level.Info, ex);
-            }
-            catch (ControllerExceptionGetAllSuccess ex)
-            {
-                _APIResponse.StatusCode = System.Net.HttpStatusCode.OK;
-                _APIResponse.Result = dataDTO;
-                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info, ex);
             }
             catch (Exception ex)
             {
@@ -153,19 +149,15 @@ namespace VZPStatAPI.Controllers
                 if (data is null)
                     throw new ControllerExceptionNotFoundById(nameOfObject, ID);
                 dataDTO = mapper.Map<ActivityGetDTO>(data);
-                throw new ControllerExceptionFoundByIdSuccess(nameOfObject, ID);
+                _APIResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                _APIResponse.Result = dataDTO;
+                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info);
 
             }
             catch (ControllerExceptionNotFoundById ex)
             {
                 _APIResponse.StatusCode = System.Net.HttpStatusCode.NotFound;
                 return _returnResponse.Response(false, _APIResponse, info, Logger.Logger.Level.Info, ex);
-            }
-            catch (ControllerExceptionFoundByIdSuccess ex)
-            {
-                _APIResponse.StatusCode = System.Net.HttpStatusCode.OK;
-                _APIResponse.Result = dataDTO;
-                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info, ex);
             }
             catch (Exception ex)
             {
@@ -198,13 +190,9 @@ namespace VZPStatAPI.Controllers
                 var result = await unitOfWork.Activities.AddRangeAsync(data);
                 if (result is false)
                     throw new ControllerExceptionExceptionAdded(nameOfObject);
-                else
-                    throw new ControllerExceptionSuccessAdded(nameOfObject);
-            }
-            catch (ControllerExceptionSuccessAdded ex)
-            {
+
                 _APIResponse.StatusCode = System.Net.HttpStatusCode.NoContent;
-                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info, ex);
+                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info);
             }
             catch (ControllerExceptionExceptionAdded ex)
             {
@@ -251,18 +239,14 @@ namespace VZPStatAPI.Controllers
                 var result = unitOfWork.Activities.Update(app);
                 if (result is false)
                     throw new ControllerExceptionExceptionUpdatedByID(nameOfObject, ID);
-                else
-                    throw new ControllerExceptionSuccessUpdatedByID(nameOfObject, ID);
+
+                _APIResponse.StatusCode = System.Net.HttpStatusCode.NoContent;
+                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info);
             }
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 _APIResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return _returnResponse.Response(false, _APIResponse, info, Logger.Logger.Level.Error, ex);
-            }
-            catch (ControllerExceptionSuccessUpdatedByID ex)
-            {
-                _APIResponse.StatusCode = System.Net.HttpStatusCode.NoContent;
-                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info, ex);
             }
             catch (Exception ex)
             {
@@ -308,18 +292,14 @@ namespace VZPStatAPI.Controllers
                 var result = unitOfWork.Activities.Update(activityUpdated);
                 if (result is false)
                     throw new ControllerExceptionExceptionUpdatedByID(nameOfObject, ID);
-                else
-                    throw new ControllerExceptionSuccessUpdatedByID(nameOfObject, ID);
+
+                _APIResponse.StatusCode = System.Net.HttpStatusCode.NoContent;
+                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info);
             }
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 _APIResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return _returnResponse.Response(false, _APIResponse, info, Logger.Logger.Level.Error, ex);
-            }
-            catch (ControllerExceptionSuccessUpdatedByID ex)
-            {
-                _APIResponse.StatusCode = System.Net.HttpStatusCode.NoContent;
-                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info, ex);
             }
             catch (Exception ex)
             {
@@ -352,23 +332,16 @@ namespace VZPStatAPI.Controllers
                 bool result = await unitOfWork.Activities.RemoveAsync(entity);
 
                 if (result is false)
-                {
                     throw new ControllerExceptionDeleteByID(nameOfObject, ID);
-                }
-                else
-                {
-                    throw new ControllerSuccessDeleteSuccessByID(nameOfObject, ID);
-                }
+                
+
+                _APIResponse.StatusCode = System.Net.HttpStatusCode.NoContent;
+                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info);
             }
             catch (ControllerExceptionDeleteByID ex)
             {
                 _APIResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return _returnResponse.Response(false, _APIResponse, info, Logger.Logger.Level.Error, ex);
-            }
-            catch (ControllerSuccessDeleteSuccessByID ex)
-            {
-                _APIResponse.StatusCode = System.Net.HttpStatusCode.NoContent;
-                return _returnResponse.Response(true, _APIResponse, info, Logger.Logger.Level.Info, ex);
             }
             catch (Exception ex)
             {
