@@ -1,0 +1,10 @@
+
+dotnet ef migrations add ParentBranch --startup-project "../VZPStatAPI/VZPStatAPI.csproj"
+
+dotnet ef database update Initialize
+
+dotnet ef database update script | out-file ./script.sql 
+
+dotnet ef migrations --startup-project "../VZPStatAPI/VZPStatAPI.csproj" script | out-file ./Script/Initialize.sql 
+
+dotnet ef migrations script TransferReason ParentBranch --startup-project "../VZPStatAPI/VZPStatAPI.csproj"  | out-file ./script.sql 

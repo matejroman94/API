@@ -1,0 +1,5 @@
+dotnet publish -c Release -o c:\vzpapiservice
+
+sc create "VZP API" binPath=%CD%\vzpapiservice\VZPStatAPI.exe
+sc start "VZP API"
+sc delete "VZP API"
