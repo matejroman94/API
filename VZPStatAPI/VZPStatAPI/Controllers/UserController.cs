@@ -68,17 +68,12 @@ namespace VZPStatAPI.Controllers
                     throw new ControllerExceptionNotFoundAny(nameOfObjects);
                 }
                 dataDTO = mapper.Map<UserGetDTO[]>(data.Item1).ToList();
-                throw new ControllerExceptionGetAllSuccess(nameOfObjects);
+                return Ok(dataDTO);
             }
             catch (ControllerExceptionNotFoundAny ex)
             {
                 logger.LogWarning(exception + ex.Message);
                 return NotFound(ex.Message);
-            }
-            catch (ControllerExceptionGetAllSuccess ex)
-            {
-                logger.LogInformation(ex.Message);
-                return Ok(dataDTO);
             }
             catch (Exception ex)
             {
@@ -108,18 +103,13 @@ namespace VZPStatAPI.Controllers
                 if (data is null)
                     throw new ControllerExceptionNotFoundById(nameOfObject, ID);
                 dataDTO = mapper.Map<UserGetDTO>(data);
-                throw new ControllerExceptionFoundByIdSuccess(nameOfObject, ID);
+                return Ok(dataDTO);
 
             }
             catch (ControllerExceptionNotFoundById ex)
             {
                 logger.LogWarning(exception + ex.Message);
                 return NotFound(ex.Message);
-            }
-            catch (ControllerExceptionFoundByIdSuccess ex)
-            {
-                logger.LogInformation(ex.Message);
-                return Ok(dataDTO);
             }
             catch (Exception ex)
             {
@@ -147,7 +137,8 @@ namespace VZPStatAPI.Controllers
                 LDAP.LDAP_Helper.Helper helper = new LDAP.LDAP_Helper.Helper(configuration, unitOfWork, login);
                 lDAP_Response = await helper.Get_LDAP_ResponseAsync();
 
-                throw new ControllerExceptionFoundBySuccess(nameOfObject, login);
+                lDAP_Response.Success = true;
+                return Ok(lDAP_Response);
 
             }
             catch (ControllerExceptionNotFoundBy ex)
@@ -155,12 +146,6 @@ namespace VZPStatAPI.Controllers
                 lDAP_Response.Error = ex.Message;
                 logger.LogWarning(exception + ex.Message);
                 return NotFound(lDAP_Response);
-            }
-            catch (ControllerExceptionFoundBySuccess ex)
-            {
-                lDAP_Response.Success = true;
-                logger.LogInformation(ex.Message);
-                return Ok(lDAP_Response);
             }
             catch (Exception ex)
             {
@@ -213,7 +198,8 @@ namespace VZPStatAPI.Controllers
                 LDAP.LDAP_Helper.HelperTest helper = new LDAP.LDAP_Helper.HelperTest(unitOfWork);
                 lDAP_Response = await helper.Get_LDAP_ResponseAsync(searchResult);
 
-                throw new ControllerExceptionFoundBySuccess(nameOfObject, login);
+                lDAP_Response.Success = true;
+                return Ok(lDAP_Response);
 
             }
             catch (ControllerExceptionNotFoundBy ex)
@@ -221,12 +207,6 @@ namespace VZPStatAPI.Controllers
                 lDAP_Response.Error = ex.Message;
                 logger.LogWarning(exception + ex.Message);
                 return NotFound(lDAP_Response);
-            }
-            catch (ControllerExceptionFoundBySuccess ex)
-            {
-                lDAP_Response.Success = true;
-                logger.LogInformation(ex.Message);
-                return Ok(lDAP_Response);
             }
             catch (Exception ex)
             {
@@ -261,18 +241,13 @@ namespace VZPStatAPI.Controllers
                 var result = await unitOfWork.Users.AddRangeAsync(data);
                 if (result is false)
                     throw new ControllerExceptionExceptionAdded(nameOfObject);
-                else
-                    throw new ControllerExceptionSuccessAdded(nameOfObject);
+
+                return NoContent();
             }
             catch (ControllerExceptionExceptionAdded ex)
             {
                 logger.LogError(exception + ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerExceptionSuccessAdded ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
@@ -306,18 +281,13 @@ namespace VZPStatAPI.Controllers
                 var result = unitOfWork.Users.Update(user);
                 if (result is false)
                     throw new ControllerExceptionExceptionUpdatedByID(nameOfObject, ID);
-                else
-                    throw new ControllerExceptionSuccessUpdatedByID(nameOfObject, ID);
+
+                return NoContent();
             }
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 logger.LogError(exception + ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerExceptionSuccessUpdatedByID ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
@@ -355,18 +325,13 @@ namespace VZPStatAPI.Controllers
                 var result = unitOfWork.Users.Update(userUpdated);
                 if (result is false)
                     throw new ControllerExceptionExceptionUpdatedByID(nameOfObject, ID);
-                else
-                    throw new ControllerExceptionSuccessUpdatedByID(nameOfObject, ID);
+
+                return NoContent();
             }
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 logger.LogError(exception + ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerExceptionSuccessUpdatedByID ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
@@ -395,23 +360,14 @@ namespace VZPStatAPI.Controllers
                 bool result = await unitOfWork.Users.RemoveAsync(entity!);
 
                 if (result is false)
-                {
                     throw new ControllerExceptionDeleteByID(nameOfObject, ID);
-                }
-                else
-                {
-                    throw new ControllerSuccessDeleteSuccessByID(nameOfObject, ID);
-                }
+
+                return NoContent();
             }
             catch (ControllerExceptionDeleteByID ex)
             {
                 logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerSuccessDeleteSuccessByID ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
