@@ -1,13 +1,25 @@
-﻿# Webové Api pro klienta VZP by Matěj Roman
+﻿# Webové Api pro klienta VZP -  Matěj Roman
+
+## Přehled
+
+API běží jako Windows služba. Systémy běžící na různých pobočkách VZP posílají data na endpointy. API také ověřuje role uživatelů přes LDAP, kteří se přihlašují do systémů Kadlec Elektronika. API slouží také jako vstupní bod pro filtrování dat z databáze. Endpointy by se v budoucnosti měly ještě upravovat, ale poslední verzi už nemám.
+
+U tohoto projektu jsem se především snažil vhodně přetransformovat přicházející data z poboček a uložit je do databáze. 
+Většinu chyb se mi podařilo odchytnout díky jednotkovým testům. 
+Díky náhodně generovaným událostem pomocí knihovny Bogus jsem mohl simulovat chování v produkčním prostředí a odhalit tak další chyby.
+
 
 ## Co bylo úkolem
 
-Vytvořit API službu, která dokáže rozklíčovat vstupní data událostí ze systému Kadlec Elektronika z různých poboček VZP a uložit informace do navržených tabulek. Události jsou ukládány do systému jako záznamy po 10 bajtech. Jednou za čas systém odešle do API všechny poslední události, která je následně zpracuje a uloží.
+Vytvořit API službu, která dokáže rozklíčovat vstupní data událostí ze systému Kadlec Elektronika z různých poboček VZP a uložit informace do navržených tabulek.  
+Jednou za čas systém odešle do API 
+všechny poslední události, která je následně zpracuje a uloží do databáze.
 
+Události jsou ukládány do systému jako záznamy po 10 bajtech.
 Příklad tabulky:
 
 | Událost | Kód | P0 | P1 | P2 | P3 | P4 | P5 |
-| --------- | --------- | --------- |
+| --------- | --------- | --------- | --------- | --------- | --------- | --------- | --------- |
 | Stisk tlačítka, zařazení k činnosti | 01h  | poř. číslo MSB   | poř. číslo LSB  | č. tiskárny | činnost | odhad ček. MSB | odhad ček. LSB |
 | Vyvolání klienta | 02h  | poř. číslo MSB   | poř. číslo LSB  | přepážka | činnost | doba čekání MSB | doba čekání LSB |
 
