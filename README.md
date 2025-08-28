@@ -3,6 +3,7 @@
 ## Přehled
 
 API funguje jako Windows služba. Systémy na různých pobočkách VZP odesílají data na specifické endpointy. Současně API ověřuje role uživatelů přes LDAP, kteří se přihlašují do systémů Kadlec Elektronika. Dále slouží jako hlavní vstupní bod pro filtrování dat z databáze. V budoucnu je plánováno další upravování endpointů, ale poslední verzi již nemám k dispozici.
+Autentizace a autorizace nebyly vyžadovány.
 
 U tohoto projektu jsem se především snažil vhodně přetransformovat přicházející data z poboček a uložit je do databáze. 
 Většinu chyb se mi podařilo odchytnout díky jednotkovým testům. 
