@@ -73,7 +73,6 @@ namespace VZPStatAPI.Controllers
             catch (ControllerExceptionNotFoundAny ex)
             {
                 logger.LogWarning(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return NotFound(ex.Message);
             }
             catch (ControllerExceptionGetAllSuccess ex)
@@ -84,7 +83,6 @@ namespace VZPStatAPI.Controllers
             catch (Exception ex)
             {
                 logger.LogError(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 Logger.Logger.NewOperationLog($"{nameOfClass} GetAll function failed: " + ex.Message, Logger.Logger.Level.Error);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
@@ -116,7 +114,6 @@ namespace VZPStatAPI.Controllers
             catch (ControllerExceptionNotFoundById ex)
             {
                 logger.LogWarning(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return NotFound(ex.Message);
             }
             catch (ControllerExceptionFoundByIdSuccess ex)
@@ -127,7 +124,6 @@ namespace VZPStatAPI.Controllers
             catch (Exception ex)
             {
                 logger.LogError(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -158,7 +154,6 @@ namespace VZPStatAPI.Controllers
             {
                 lDAP_Response.Error = ex.Message;
                 logger.LogWarning(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return NotFound(lDAP_Response);
             }
             catch (ControllerExceptionFoundBySuccess ex)
@@ -172,7 +167,6 @@ namespace VZPStatAPI.Controllers
                 string msg = ex.Message + ex.InnerException?.Message;
                 lDAP_Response.Error = msg;
                 logger.LogError(exception + msg);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + msg)));
                 return StatusCode(StatusCodes.Status500InternalServerError, lDAP_Response);
             }
         }
@@ -226,7 +220,6 @@ namespace VZPStatAPI.Controllers
             {
                 lDAP_Response.Error = ex.Message;
                 logger.LogWarning(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return NotFound(lDAP_Response);
             }
             catch (ControllerExceptionFoundBySuccess ex)
@@ -240,7 +233,6 @@ namespace VZPStatAPI.Controllers
                 string msg = ex.Message + ex.InnerException?.Message;
                 lDAP_Response.Error = msg;
                 logger.LogError(exception + msg);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + msg)));
                 return StatusCode(StatusCodes.Status500InternalServerError, lDAP_Response);
             }
         }
@@ -275,7 +267,6 @@ namespace VZPStatAPI.Controllers
             catch (ControllerExceptionExceptionAdded ex)
             {
                 logger.LogError(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
             catch (ControllerExceptionSuccessAdded ex)
@@ -286,7 +277,6 @@ namespace VZPStatAPI.Controllers
             catch (Exception ex)
             {
                 logger.LogError(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -322,7 +312,6 @@ namespace VZPStatAPI.Controllers
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 logger.LogError(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
             catch (ControllerExceptionSuccessUpdatedByID ex)
@@ -333,7 +322,6 @@ namespace VZPStatAPI.Controllers
             catch (Exception ex)
             {
                 logger.LogError(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -373,7 +361,6 @@ namespace VZPStatAPI.Controllers
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 logger.LogError(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
             catch (ControllerExceptionSuccessUpdatedByID ex)
@@ -384,7 +371,6 @@ namespace VZPStatAPI.Controllers
             catch (Exception ex)
             {
                 logger.LogError(exception + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -420,7 +406,6 @@ namespace VZPStatAPI.Controllers
             catch (ControllerExceptionDeleteByID ex)
             {
                 logger.LogError(ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
             catch (ControllerSuccessDeleteSuccessByID ex)
@@ -431,7 +416,6 @@ namespace VZPStatAPI.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }

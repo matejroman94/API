@@ -41,7 +41,6 @@ namespace VZPStatAPI.Services
                 if (level != Logger.Logger.Level.Info)
                 {
                     Logger.Logger.NewOperationLog(info + exception?.Message + exception?.InnerException?.Message, level);
-                    unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(info + exception?.Message + exception?.InnerException?.Message)));
                 }
 #if DEBUG
                 if (level == Logger.Logger.Level.Warning)
@@ -79,7 +78,6 @@ namespace VZPStatAPI.Services
                 if (level != Logger.Logger.Level.Info)
                 {
                     Logger.Logger.NewOperationLog(info + exception?.Message + exception?.InnerException?.Message, level);
-                    unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(info + exception?.Message + exception?.InnerException?.Message)));
                 }
 #if DEBUG
                 if (level == Logger.Logger.Level.Warning)

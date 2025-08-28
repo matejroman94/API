@@ -87,13 +87,11 @@ namespace VZPStatAPI.Controllers
             catch (ControllerExceptionNotFoundAny ex)
             {
                 logger.LogWarning(info + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(info + ex.Message)));
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
                 logger.LogError(info + ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(info + ex.Message)));
                 Logger.Logger.NewOperationLog($"{nameOfClass} GetAll function failed: " + ex.Message, Logger.Logger.Level.Error);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }

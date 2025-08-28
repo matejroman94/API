@@ -600,7 +600,6 @@ namespace VZPStatAPI.Controllers
                 catch (Exception ex)
                 {
                     logger.LogError(ex.Message);
-                    unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 }
             }
         }
@@ -615,7 +614,6 @@ namespace VZPStatAPI.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex.Message);
-                unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
             }
         }
     }
