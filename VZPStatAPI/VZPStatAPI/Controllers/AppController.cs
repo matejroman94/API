@@ -5,8 +5,6 @@ using Domain.DataDTO;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace VZPStatAPI.Controllers
@@ -65,18 +63,13 @@ namespace VZPStatAPI.Controllers
                     throw new ControllerExceptionNotFoundAny(nameOfObjects);
                 }
                 dataDTO = mapper.Map<AppGetDTO[]>(data.Item1).ToList();
-                throw new ControllerExceptionGetAllSuccess(nameOfObjects);
+                return Ok(dataDTO);
             }
             catch (ControllerExceptionNotFoundAny ex)
             {
                 logger.LogWarning(exception + ex.Message);
                 unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return NotFound(ex.Message);
-            }
-            catch (ControllerExceptionGetAllSuccess ex)
-            {
-                logger.LogInformation(ex.Message);
-                return Ok(dataDTO);
             }
             catch (Exception ex)
             {
@@ -108,7 +101,7 @@ namespace VZPStatAPI.Controllers
                 if (data is null)
                     throw new ControllerExceptionNotFoundById(nameOfObject, ID);
                 dataDTO = mapper.Map<AppGetDTO>(data);
-                throw new ControllerExceptionFoundByIdSuccess(nameOfObject, ID);
+                return Ok(dataDTO);
 
             }
             catch (ControllerExceptionNotFoundById ex)
@@ -116,11 +109,6 @@ namespace VZPStatAPI.Controllers
                 logger.LogWarning(exception + ex.Message);
                 unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return NotFound(ex.Message);
-            }
-            catch (ControllerExceptionFoundByIdSuccess ex)
-            {
-                logger.LogInformation(ex.Message);
-                return Ok(dataDTO);
             }
             catch (Exception ex)
             {
@@ -154,18 +142,13 @@ namespace VZPStatAPI.Controllers
                 if (result is false)
                     throw new ControllerExceptionExceptionAdded(nameOfObject);
                 else
-                    throw new ControllerExceptionSuccessAdded(nameOfObject);
+                    return NoContent();
             }
             catch (ControllerExceptionExceptionAdded ex)
             {
                 logger.LogError(exception + ex.Message);
                 unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerExceptionSuccessAdded ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
@@ -201,18 +184,13 @@ namespace VZPStatAPI.Controllers
                 if (result is false)
                     throw new ControllerExceptionExceptionUpdatedByID(nameOfObject, ID);
                 else
-                    throw new ControllerExceptionSuccessUpdatedByID(nameOfObject, ID);
+                    return NoContent();
             }
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 logger.LogError(exception + ex.Message);
                 unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerExceptionSuccessUpdatedByID ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
@@ -252,18 +230,13 @@ namespace VZPStatAPI.Controllers
                 if (result is false)
                     throw new ControllerExceptionExceptionUpdatedByID(nameOfObject, ID);
                 else
-                    throw new ControllerExceptionSuccessUpdatedByID(nameOfObject, ID);
+                    return NoContent();
             }
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 logger.LogError(exception + ex.Message);
                 unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerExceptionSuccessUpdatedByID ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
@@ -292,25 +265,16 @@ namespace VZPStatAPI.Controllers
 
                 bool result = await unitOfWork.Apps.RemoveAsync(entity);
 
-                if (result is false)
-                {
+                if (result is false) 
                     throw new ControllerExceptionDeleteByID(nameOfObject, ID);
-                }
-                else
-                {
-                    throw new ControllerSuccessDeleteSuccessByID(nameOfObject, ID);
-                }
+
+                return NoContent();
             }
             catch (ControllerExceptionDeleteByID ex)
             {
                 logger.LogError(ex.Message);
                 unitOfWork.LoggerRepo.Add(mapper.Map<Domain.Models.Logger>(new LoggerPutDTO(exception + ex.Message)));
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerSuccessDeleteSuccessByID ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
