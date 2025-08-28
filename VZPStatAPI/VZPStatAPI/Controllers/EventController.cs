@@ -444,8 +444,8 @@ namespace VZPStatAPI.Controllers
 
                 if (result is false)
                     throw new ControllerExceptionExceptionAdded(nameOfObjects);
-                else
-                    throw new ControllerExceptionSuccessAdded(nameOfObjects);
+
+                return NoContent();
             }
             catch (ControllerExceptionExceptionAdded ex)
             {
@@ -458,11 +458,6 @@ namespace VZPStatAPI.Controllers
                 Logger.Logger.NewOperationLog(exception + ex.Message, Logger.Logger.Level.Warning);
                 logger.LogError(exception + ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerExceptionSuccessAdded ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
@@ -654,8 +649,6 @@ namespace VZPStatAPI.Controllers
 
                     if (result is false)
                         throw new ControllerExceptionExceptionAdded(nameOfObjects);
-                    else
-                        throw new ControllerExceptionSuccessAdded(nameOfObjects);
                 }
                 catch (ControllerExceptionExceptionAdded ex)
                 {
@@ -666,10 +659,6 @@ namespace VZPStatAPI.Controllers
                 {
                     logger.LogError(ex.Message);
                     return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-                }
-                catch (ControllerExceptionSuccessAdded ex)
-                {
-                    logger.LogInformation(ex.Message);
                 }
                 catch (Exception ex)
                 {
@@ -945,8 +934,6 @@ namespace VZPStatAPI.Controllers
 
                     if (result is false)
                         throw new ControllerExceptionExceptionAdded(nameOfObjects);
-                    else
-                        throw new ControllerExceptionSuccessAdded(nameOfObjects);
                 }
                 catch (ControllerExceptionExceptionAdded ex)
                 {
@@ -957,10 +944,6 @@ namespace VZPStatAPI.Controllers
                 {
                     logger.LogError(ex.Message);
                     return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-                }
-                catch (ControllerExceptionSuccessAdded ex)
-                {
-                    logger.LogInformation(ex.Message);
                 }
                 catch (Exception ex)
                 {
@@ -996,18 +979,13 @@ namespace VZPStatAPI.Controllers
                 bool result = unitOfWork.Events.Update(@event);
                 if (result is false)
                     throw new ControllerExceptionExceptionUpdatedByID(nameOfObject, ID);
-                else
-                    throw new ControllerExceptionSuccessUpdatedByID(nameOfObject, ID);
+
+                return NoContent();
             }
             catch (ControllerExceptionExceptionUpdatedByID ex)
             {
                 logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerExceptionSuccessUpdatedByID ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
@@ -1035,23 +1013,14 @@ namespace VZPStatAPI.Controllers
 
                 bool result = await unitOfWork.Events.RemoveAsync(entity);
                 if (result is false)
-                {
                     throw new ControllerExceptionDeleteByID(nameOfObject, ID);
-                }
-                else
-                {
-                    throw new ControllerSuccessDeleteSuccessByID(nameOfObject, ID);
-                }
+
+                return NoContent();
             }
             catch (ControllerExceptionDeleteByID ex)
             {
                 logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-            catch (ControllerSuccessDeleteSuccessByID ex)
-            {
-                logger.LogInformation(ex.Message);
-                return NoContent();
             }
             catch (Exception ex)
             {
