@@ -1,6 +1,0 @@
-URL=http://localhost:5193/Event/GetLastEventAsBytes/1
-
-Answer={
-  "code" : "",
-  "date" : ""
-}
