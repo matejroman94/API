@@ -4,16 +4,7 @@ using Domain.MappingProfiles;
 using Domain.Models;
 using Moq;
 using Repository.Interfaces;
-using Repository.Repository;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestProject
 {

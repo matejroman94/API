@@ -1,10 +1,5 @@
 ﻿using Domain.Models;
 using Repository.Interfaces;
-using Repository.Repository;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using VZPStatAPI.Filter;
-using VZPStatAPI.Helpers;
 
 namespace VZPStatAPI.LDAP.LDAP_Helper
 {

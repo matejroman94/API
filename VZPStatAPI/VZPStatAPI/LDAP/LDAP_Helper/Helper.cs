@@ -1,8 +1,4 @@
-﻿using Domain.Models;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Repository.Interfaces;
-using Repository.Repository;
-using Serilog;
+﻿using Repository.Interfaces;
 
 namespace VZPStatAPI.LDAP.LDAP_Helper
 {
